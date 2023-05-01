@@ -4,6 +4,9 @@ from datetime import datetime
 
 class Analyst:
 
+    def __init__(self, platform):
+        self.platform = platform
+
     def dump_new_scopes(self, output='.') -> None:
         with open(self.platform.path, 'r') as file:
             programs = list(map(lambda prog: {'id': prog.get(self.program_id),
