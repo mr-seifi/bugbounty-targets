@@ -8,7 +8,7 @@ from platforms.hackerone import HackerOneAPI
 from platforms.bugcrowd import BugcrowdAPI
 from platforms.intigriti import IntigritiAPI
 from platforms.yeswehack import YesWeHackAPI
-from templates import IntigritiTemplate
+from templates import IntigritiTemplate, HackeroneTemplate
 from analyze import Analyst
 
 class PublicPrograms:
@@ -189,9 +189,11 @@ async def main():
     logging.info("Programs crawled successfully.")
 
     intigriti_analyst = Analyst(platform=IntigritiTemplate())
+    hackerone_analyst = Analyst(platform=HackeroneTemplate())
 
     intigriti_analyst.dump_new_scopes()
-
+    hackerone_analyst.dump_new_scopes()
+    
     logging.info("Programs analysed successfully.")
 
 if __name__ == '__main__':
