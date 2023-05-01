@@ -7,7 +7,7 @@ class Analyst:
     def __init__(self, platform):
         self.platform = platform
 
-    def dump_new_scopes(self, output='.') -> None:
+    def dump_new_scopes(self, output='./analysis') -> None:
         with open(self.platform.path, 'r') as file:
             programs = list(map(lambda prog: {'id': prog.get(self.platform.program_id),
                                               'name': prog.get(self.platform.program_name),
@@ -24,7 +24,7 @@ class Analyst:
                 if is_updated:
                     new_scopes = [ domain
                         for domain in prog['domains']
-                        if client.sadd(f'{_key}:domains', domain) == 0
+                        if client.sadd(f'{_key}:domains', domain)
                     ]
 
                     updates[prog['name']] = {
@@ -32,5 +32,5 @@ class Analyst:
                         'new_scopes': new_scopes
                     }
             
-            with open(f'{output}/{self.platform.name}_analysis.json', 'w') as writer:
+            with open(f'{output}/{self.platform.name}.json', 'w') as writer:
                 json.dump(updates, writer)
