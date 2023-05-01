@@ -18,6 +18,8 @@ class Analyst:
             updates = {}
             for prog in programs:
                 _key = f'{self.platform.get_name()}:{prog["id"]}'
+                if not prog['last_updated']:
+                    continue
                 is_updated = client.sadd(f'{_key}:last_updated', 
                                          prog['last_updated'].timestamp())
                 if is_updated:

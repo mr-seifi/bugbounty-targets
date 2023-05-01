@@ -69,14 +69,20 @@ class HackeroneTemplate(BaseTemplate):
                                'program_name')
 
     def get_program_last_updated(self, asset):
-        data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
-        dates = list(map(lambda d: datetime.strptime(d.get('attributes').get('updated_at'), 
-                                                     '%Y-%m-%dT%H:%M:%S.%fZ'), data))
-
-        return max(dates)
+        try:
+            data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
+            dates = list(map(lambda d: datetime.strptime(d.get('attributes').get('updated_at'), 
+                                                        '%Y-%m-%dT%H:%M:%S.%fZ'), data))
+            last_date = max(dates)
+            return last_date 
+        except:
+            return 0
     
     def get_program_domains(self, asset):
-        data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
-        domains = list(map(lambda d: d.get('attributes').get('asset_identifier'), data))
+        try:
+            data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
+            domains = list(map(lambda d: d.get('attributes').get('asset_identifier'), data))
 
-        return domains
+            return domains
+        except:
+            return []
