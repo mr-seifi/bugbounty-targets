@@ -2,3 +2,4 @@ httpx
 tenacity
 python-dotenv
 rich
+redis==4.3.4

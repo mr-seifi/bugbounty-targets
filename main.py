@@ -8,7 +8,8 @@ from platforms.hackerone import HackerOneAPI
 from platforms.bugcrowd import BugcrowdAPI
 from platforms.intigriti import IntigritiAPI
 from platforms.yeswehack import YesWeHackAPI
-
+from templates import HackeroneTemplate, BugcrowdTemplate, IntigritiTemplate, YeswehackTemplate
+from analyze import Analyst
 
 class PublicPrograms:
     """A class to retrieve public programs from Platforms."""
@@ -186,6 +187,18 @@ async def main():
     )
 
     logging.info("Programs crawled successfully.")
+
+    hackerone_analyst = Analyst(platform=HackeroneTemplate())
+    bugcrowd_analyst = Analyst(platform=BugcrowdTemplate())
+    intigriti_analyst = Analyst(platform=IntigritiTemplate())
+    yeswehack_analyst = Analyst(platform=YeswehackTemplate())
+
+    hackerone_analyst.dump_new_scopes()
+    bugcrowd_analyst.dump_new_scopes()
+    intigriti_analyst.dump_new_scopes()
+    yeswehack_analyst.dump_new_scopes()
+    
+    logging.info("Programs analysed successfully.")
 
 if __name__ == '__main__':
     asyncio.run(main())
