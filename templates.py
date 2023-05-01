@@ -13,10 +13,10 @@ class BaseTemplate:
 
 class IntigritiTemplate(BaseTemplate):
     def __init__(self) -> None:
-        super.__init__(path='./programs/intigriti.json', 
-                       name='intigriti',
-                       program_id='programId',
-                       program_name='name',
-                       program_last_updated='lastUpdatedAt',
-                       program_domains='domains',
-                       program_domains_endpoint='endpoint')
+        super().__init__(path='./programs/intigriti.json', 
+                         name='intigriti',
+                         program_id='programId',
+                         program_name='name',
+                         program_last_updated='lastUpdatedAt',
+                         program_domains='domains',
+                         program_domains_endpoint='endpoint')
