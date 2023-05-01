@@ -86,3 +86,24 @@ class HackeroneTemplate(BaseTemplate):
             return domains
         except:
             return []
+
+class BugcrowdTemplate(BaseTemplate):
+    def __init__(self) -> None:
+        super().__init__(path='./programs/bugcrowd.json', 
+                         name='bugcrowd',
+                         program_id='scope_rank_url',
+                         program_name='name',
+                         program_last_updated='',
+                         program_domains='target_groups/targets')
+    
+    def get_program_id(self, asset):
+        return asset.get(self.program_id).split('/')[1]
+    
+    def get_program_last_updated(self, asset):
+        return datetime.now()
+    
+    def get_program_domains(self, asset):
+        targets = list(map(lambda t: t['targets'], asset.get('target_groups')))
+        domains = list(map(lambda t: t['uri'], targets))
+
+        return domains
