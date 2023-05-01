@@ -9,12 +9,12 @@ class Analyst:
 
     def dump_new_scopes(self, output='.') -> None:
         with open(self.platform.path, 'r') as file:
-            programs = list(map(lambda prog: {'id': prog.get(self.program_id),
-                                              'name': prog.get(self.program_name),
-                                              'last_updated': prog.get(self.program_last_updated),
+            programs = list(map(lambda prog: {'id': prog.get(self.platform.program_id),
+                                              'name': prog.get(self.platform.program_name),
+                                              'last_updated': prog.get(self.platform.program_last_updated),
                                               'domains': list(map(lambda domain: 
-                                                                  domain[self.program_domains_endpoint], 
-                                                                  prog.get(self.program_domains)))}, 
+                                                                  domain[self.platform.program_domains_endpoint], 
+                                                                  prog.get(self.platform.program_domains)))}, 
                                                json.load(file)))
             client = Redis()
             updates = {}
