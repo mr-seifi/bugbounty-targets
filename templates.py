@@ -103,7 +103,8 @@ class BugcrowdTemplate(BaseTemplate):
         return datetime.now()
     
     def get_program_domains(self, asset):
-        targets = list(map(lambda t: t['targets'], asset.get('target_groups')))
-        domains = list(map(lambda t: t['uri'], targets))
+        domains = list(map(lambda t: list(map(lambda target: target['uri'], 
+                                              t['targets'])), 
+                                              asset.get('target_groups')))
 
         return domains
