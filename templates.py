@@ -61,8 +61,8 @@ class HackeroneTemplate(BaseTemplate):
                          name='hackerone',
                          program_id='id',
                          program_name='attributes/name',
-                         program_last_updated='relationships/structured_scopes/data/updated_at',
-                         program_domains='relationships/structured_scopes/data/asset_identifier')
+                         program_last_updated='relationships/structured_scopes/data/attributes/updated_at',
+                         program_domains='relationships/structured_scopes/data/attributes/asset_identifier')
     
     def get_program_name(self, asset):
         return self.nested_get(asset, 
@@ -70,13 +70,13 @@ class HackeroneTemplate(BaseTemplate):
 
     def get_program_last_updated(self, asset):
         data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
-        dates = list(map(lambda d: datetime.strptime(d.get('updated_at') or '1990-01-01T00:00:00.000Z', 
+        dates = list(map(lambda d: datetime.strptime(d.get('attributes').get('updated_at'), 
                                                      '%Y-%m-%dT%H:%M:%S.%fZ'), data))
 
         return max(dates)
     
     def get_program_domains(self, asset):
         data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
-        domains = list(map(lambda d: d['attributes']['asset_identifier'], data))
+        domains = list(map(lambda d: d.get('attributes').get('asset_identifier'), data))
 
         return domains
