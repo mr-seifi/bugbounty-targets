@@ -9,7 +9,7 @@ class Analyst:
 
     def dump_new_scopes(self, output='./analysis') -> None:
         with open(self.platform.get_path(), 'r') as file:
-            programs = list(map(lambda prog: {'id': prog.get(self.platform.get_program_id(prog)),
+            programs = list(map(lambda prog: {'id': self.platform.get_program_id(prog),
                                               'name': self.platform.get_program_name(prog),
                                               'last_updated': self.platform.get_program_last_updated(prog),
                                               'domains': self.platform.get_program_domains(prog)}, 
