@@ -110,3 +110,21 @@ class BugcrowdTemplate(BaseTemplate):
                                               asset.get('target_groups')))
 
         return list(itertools.chain.from_iterable(domains))
+    
+class YeswehackTemplate(BaseTemplate):
+    def __init__(self) -> None:
+        super().__init__(path='./programs/yeswehack.json', 
+                         name='yeswehack',
+                         program_id='slug',
+                         program_name='name',
+                         program_last_updated='',
+                         program_domains='scopes/scope')
+    
+    def get_program_last_updated(self, asset):
+        return datetime.now()
+
+    def get_program_domains(self, asset):
+        scopes = list(map(lambda s: s['scope'], 
+                          asset.get('scopes')))
+
+        return scopes
