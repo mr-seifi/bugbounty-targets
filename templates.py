@@ -1,4 +1,6 @@
+import itertools
 from datetime import datetime
+
 
 class BaseTemplate:
     def __init__(self, path, 
@@ -103,8 +105,8 @@ class BugcrowdTemplate(BaseTemplate):
         return datetime.now()
     
     def get_program_domains(self, asset):
-        domains = list(map(lambda t: list(map(lambda target: target['uri'], 
+        domains = list(map(lambda t: list(map(lambda target: target['uri'] or target['name'], 
                                               t['targets'])), 
                                               asset.get('target_groups')))
 
-        return domains
+        return list(itertools.chain.from_iterable(domains))
