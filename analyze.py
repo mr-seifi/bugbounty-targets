@@ -19,7 +19,7 @@ class Analyst:
             client = Redis()
             updates = {}
             for prog in programs:
-                _key = f'{self.name}:{prog["id"]}'
+                _key = f'{self.platform.name}:{prog["id"]}'
                 is_updated = client.sadd(f'{_key}:last_updated', prog['last_updated'])
                 if is_updated:
                     new_scopes = [ domain
@@ -27,10 +27,10 @@ class Analyst:
                         if client.sadd(f'{_key}:domains', domain) == 0
                     ]
 
-                    updates[self._prog_name] = {
+                    updates[prog['name']] = {
                         'last_update': datetime.fromtimestamp(prog['last_updated']).strftime('%Y-%m-%d %H:%M:%S'),
                         'new_scopes': new_scopes
                     }
             
-            with open(f'{output}/{self.name}_analysis.json', 'w') as writer:
+            with open(f'{output}/{self.platform.name}_analysis.json', 'w') as writer:
                 json.dump(updates, writer)
