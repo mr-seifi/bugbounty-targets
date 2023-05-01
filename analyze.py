@@ -28,10 +28,11 @@ class Analyst:
                         if client.sadd(f'{_key}:domains', domain)
                     ]
 
-                    updates[prog['name']] = {
-                        'last_update': prog['last_updated'].strftime('%Y-%m-%d %H:%M:%S'),
-                        'new_scopes': new_scopes
-                    }
+                    if new_scopes:
+                        updates[prog['name']] = {
+                            'last_update': prog['last_updated'].strftime('%Y-%m-%d %H:%M:%S'),
+                            'new_scopes': new_scopes
+                        }
             
             with open(f'{output}/{self.platform.name}.json', 'w') as writer:
                 json.dump(updates, writer)
