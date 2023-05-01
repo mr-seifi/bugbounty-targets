@@ -4,7 +4,7 @@ class BaseTemplate:
     def __init__(self, path, 
                  name, program_id,
                  program_name, program_last_updated, 
-                 program_domains, program_domains_endpoint) -> None:
+                 program_domains) -> None:
         self.path = path
         self.name = name
         self.program_id = program_id
