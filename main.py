@@ -189,9 +189,9 @@ async def main():
     logging.info("Programs crawled successfully.")
 
     hackerone_analyst = Analyst(platform=HackeroneTemplate())
-    bugcrowd_analyst = Analyst(platform=HackeroneTemplate())
+    bugcrowd_analyst = Analyst(platform=BugcrowdTemplate())
     intigriti_analyst = Analyst(platform=IntigritiTemplate())
-    yeswehack_analyst = Analyst(platform=HackeroneTemplate())
+    yeswehack_analyst = Analyst(platform=YeswehackTemplate())
 
     hackerone_analyst.dump_new_scopes()
     bugcrowd_analyst.dump_new_scopes()
