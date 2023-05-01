@@ -8,19 +8,18 @@ class Analyst:
         self.platform = platform
 
     def dump_new_scopes(self, output='./analysis') -> None:
-        with open(self.platform.path, 'r') as file:
-            programs = list(map(lambda prog: {'id': prog.get(self.platform.program_id),
-                                              'name': prog.get(self.platform.program_name),
-                                              'last_updated': prog.get(self.platform.program_last_updated),
-                                              'domains': list(map(lambda domain: 
-                                                                  domain[self.platform.program_domains_endpoint], 
-                                                                  prog.get(self.platform.program_domains)))}, 
+        with open(self.platform.get_path(), 'r') as file:
+            programs = list(map(lambda prog: {'id': prog.get(self.platform.get_program_id(prog)),
+                                              'name': self.platform.get_program_name(prog),
+                                              'last_updated': self.platform.get_program_last_updated(prog),
+                                              'domains': self.platform.get_program_domains(prog)}, 
                                                json.load(file)))
             client = Redis()
             updates = {}
             for prog in programs:
-                _key = f'{self.platform.name}:{prog["id"]}'
-                is_updated = client.sadd(f'{_key}:last_updated', prog['last_updated'])
+                _key = f'{self.platform.get_name()}:{prog["id"]}'
+                is_updated = client.sadd(f'{_key}:last_updated', 
+                                         prog['last_updated'].timestamp())
                 if is_updated:
                     new_scopes = [ domain
                         for domain in prog['domains']
@@ -28,7 +27,7 @@ class Analyst:
                     ]
 
                     updates[prog['name']] = {
-                        'last_update': datetime.fromtimestamp(prog['last_updated']).strftime('%Y-%m-%d %H:%M:%S'),
+                        'last_update': prog['last_updated'].strftime('%Y-%m-%d %H:%M:%S'),
                         'new_scopes': new_scopes
                     }
             
