@@ -52,10 +52,8 @@ class IntigritiTemplate(BaseTemplate):
                 )
     
     def get_program_domains(self, asset):
-        return self.nested_get(
-            asset,
-            'program_domains'
-        )
+        return list(map(lambda domain: domain['endpoint'], asset['domains'])) # Hardcoded
+    
 
 class HackeroneTemplate(BaseTemplate):
     def __init__(self) -> None:
