@@ -70,7 +70,8 @@ class HackeroneTemplate(BaseTemplate):
 
     def get_program_last_updated(self, asset):
         data = asset.get('relationships').get('structured_scopes').get('data') # Hardcoded
-        dates = list(map(lambda d: datetime.strptime(d.get('updated_at'), '%Y-%m-%dT%H:%M:%S.%fZ'), data))
+        dates = list(map(lambda d: datetime.strptime(d.get('updated_at') or datetime(1990, 1, 1), 
+                                                     '%Y-%m-%dT%H:%M:%S.%fZ'), data))
 
         return max(dates)
     
